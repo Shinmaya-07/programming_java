@@ -1,0 +1,95 @@
+/*
+ * Java Console-Based Login System
+ *
+ * A simple authentication system developed using Java OOP concepts.
+ * It supports role-based access for Regular Users and Admins.
+ * Demonstrates Inheritance, Polymorphism, Encapsulation, and ArrayList usage.
+ *
+ * Users enter username and password via console.
+ * After successful authentication, access is granted based on user role.
+ */
+
+import java.util.Scanner;
+import java.util.ArrayList;
+
+class User {
+   private String username;
+   private String password;
+
+   public User(String username, String password) {
+      this.username = username;
+      this.password = password;
+   }  
+
+   public boolean authenticate(String username, String password) {
+      if( this.username.equals(username) && this.password.equals(password)){
+         return true;
+      }
+      return false;
+   }
+
+  public void displayMenu() {
+      System.out.println("Welcome, " + username + "!");
+  }
+}
+
+class RegularUser extends User {
+   public RegularUser(String username, String password) {
+      super(username, password);
+   }
+
+   @Override
+   public void displayMenu() {
+      System.out.println("Welcome, Regular User. Access limited features.");
+   }
+}
+
+class Admin extends User {
+   public Admin(String username, String password) {
+      super(username, password);
+   }
+
+   @Override
+   public void displayMenu() {
+       System.out.println("Welcome, Admin. Full administrative access granted.");
+   }
+}
+
+public class LoginSystem {
+   private static ArrayList<User> users = new ArrayList<>();
+
+   public static void main(String[] args) {
+      users.add(new RegularUser("user1", "pass123"));   
+      users.add(new RegularUser("user2","pass456"));
+      users.add(new RegularUser("user3","pass789"));
+      users.add(new Admin("admin1", "adminpass"));
+
+      Scanner scanner = new Scanner(System.in);
+      
+      System.out.println("--- Login System ---");
+      System.out.print("Enter username: ");
+      String usernameInput = scanner.nextLine();
+      System.out.print("Enter password: ");
+      String passwordInput = scanner.nextLine();
+
+      login(usernameInput, passwordInput);
+      scanner.close();
+   }
+
+   public static void login(String username, String password) {
+        User authenticatedUser = null;
+        for (User user : users) {
+            if (user.authenticate(username, password)) {
+                 authenticatedUser = user;
+                 break;
+            }
+       }
+
+       if (authenticatedUser != null) {
+           System.out.println("Authentication Successful!");
+           authenticatedUser.displayMenu();
+       } else {
+           System.out.println("Invalid username or password.");
+       }
+   }
+}

@@ -17,6 +17,16 @@ class LongestCommonPrefix{
    }
   public static void main(String[] args){
      Scanner sc = new Scanner();
-     
+     System.out.print("Enter number of strings: ");
+        int n = sc.nextInt();
+        sc.nextLine(); 
+        String[] arr = new String[n];
+        System.out.println("Enter the strings:");
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextLine();
+        }
+        System.out.println("Longest Common Prefix: " + longestCommonPrefix(arr));
+
+        sc.close();
   }
 }

@@ -1,0 +1,71 @@
+\*
+*From the given matrix fing a hourglass shaped matrix and sum them 
+*1 1 1 0 0 0
+*0 1 0 0 0 0
+*1 1 1 0 0 0
+*0 0 0 0 0 0
+*0 0 0 0 0 0
+*0 0 0 0 0 0
+*An hourglass in an array is a portion shaped like this:
+* a b c
+*   d
+* e f g
+*/
+
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.regex.*;
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+
+        List<List<Integer>> arr = new ArrayList<>();
+
+        for (int i = 0; i < 6; i++) {
+            String[] arrRowTempItems = bufferedReader.readLine().replaceAll("\\s+$", "").split(" ");
+
+            List<Integer> arrRowItems = new ArrayList<>();
+
+            for (int j = 0; j < 6; j++) {
+                int arrItem = Integer.parseInt(arrRowTempItems[j]);
+                arrRowItems.add(arrItem);
+            }
+
+            arr.add(arrRowItems);
+        }
+        List<Integer> results = new ArrayList<>();
+        for(int i = 0; i<=3; i++){
+             for(int j = 0; j<=3; j++){
+
+                \\top
+                int top1 = arr.get(i).get(j);
+                int top2 = arr.get(i).get(j+1);
+                int top3 = arr.get(i).get(j+2);
+
+                \\mid
+                int mid = arr.get(i+1).get(j+1);
+
+                \\bottom
+                int bottom1 = arr.get(i+2).get(j);
+                int bottom2 = arr.get(i+2).get(j+1);
+                int bottom3 = arr.get(i+2).get(j+2);
+
+                \\sum of all
+                int sum = top1+top2+top3+mid+bottom1+bottom2+bottom3;
+
+                \\add each sum
+                results.add(sum);
+            }
+        }
+        \\get max sum
+       int result = Collections.max(results);
+       System.out.println(result);
+        
+        bufferedReader.close();
+    }
+}

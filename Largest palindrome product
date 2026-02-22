@@ -1,0 +1,60 @@
+/*A palindromic number reads the same both ways. The smallest 6 digit palindrome made from the product of two 3-digit numbers is .
+*Find the largest palindrome made from the product of two 3-digit numbers which is less than . 
+*Sample Input 0
+*2
+*101110
+*800000
+*
+*Sample Output 0
+*101101
+*793397
+*/
+
+#include <stdio.h>
+#include <stdbool.h>
+
+// Function to check if a number is palindrome
+bool isPalindrome(int num) {
+    int original = num;
+    int reverse = 0;
+
+    while (num > 0) {
+        reverse = reverse * 10 + num % 10;
+        num /= 10;
+    }
+
+    return original == reverse;
+}
+
+// Function to find largest palindrome less than n
+int largestPalindrome(int n) {
+    int maxPalindrome = 0;
+
+    for (int i = 100; i <= 999; i++) {
+        for (int j = i; j <= 999; j++) {
+            int product = i * j;
+
+            if (product < n && isPalindrome(product)) {
+                if (product > maxPalindrome) {
+                    maxPalindrome = product;
+                }
+            }
+        }
+    }
+
+    return maxPalindrome;
+}
+
+int main() {
+    int t;
+    scanf("%d", &t);
+
+    while (t--) {
+        int n;
+        scanf("%d", &n);
+
+        printf("%d\n", largestPalindrome(n));
+    }
+
+    return 0;
+}

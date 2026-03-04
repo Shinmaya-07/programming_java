@@ -1,0 +1,36 @@
+import java.io.*;
+import java.util.*;
+
+public class armstrong{
+   public static void main(String[] args){
+       Scanner sc = new Scanner(System.in);
+        int originalNumber = sc.nextInt();
+        int num = originalNumber;
+        int sum = 0;
+        int digits = 0;
+        int temp = num;
+
+        while (temp != 0) {
+            temp /= 10;
+            digits++;
+        }
+        if(digits == 2){
+          System.out.println("Not Armstrong Number");
+        }
+        else{
+           temp = num;
+           while (temp != 0) {
+              int copy = temp % 10;
+              sum += Math.pow(copy, digits);
+              temp /= 10;
+           }
+
+           if(sum == originalNumber){
+              System.out.println("Armstrong Number");
+           }
+           else{
+              System.out.println("Not Amstrong Number");
+           }
+        }
+   }
+}

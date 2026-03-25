@@ -1,0 +1,136 @@
+\* Leet code - Hard
+solved using Heap Map Technique
+You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.
+
+Merge all the linked-lists into one sorted linked-list and return it.
+
+Example 1:
+
+Input: lists = [[1,4,5],[1,3,4],[2,6]]
+Output: [1,1,2,3,4,4,5,6]
+Explanation: The linked-lists are:
+[
+  1->4->5,
+  1->3->4,
+  2->6
+]
+merging them into one sorted linked list:
+1->1->2->3->4->4->5->6
+
+Example 2:
+
+Input: lists = []
+Output: []
+
+Example 3:
+
+Input: lists = [[]]
+Output: []
+
+Constraints:
+
+    k == lists.length
+    0 <= k <= 104
+    0 <= lists[i].length <= 500
+    -104 <= lists[i][j] <= 104
+    lists[i] is sorted in ascending order.
+    The sum of lists[i].length will not exceed 104.
+
+*/
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+// Definition
+struct ListNode {
+    int val;
+    struct ListNode *next;
+};
+
+// Min Heap structure
+struct MinHeap {
+    struct ListNode** arr;
+    int size;
+};
+
+// Swap nodes
+void swap(struct ListNode** a, struct ListNode** b) {
+    struct ListNode* temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+// Heapify
+void heapify(struct MinHeap* heap, int i) {
+    int smallest = i;
+    int left = 2*i + 1;
+    int right = 2*i + 2;
+
+    if (left < heap->size && heap->arr[left]->val < heap->arr[smallest]->val)
+        smallest = left;
+
+    if (right < heap->size && heap->arr[right]->val < heap->arr[smallest]->val)
+        smallest = right;
+
+    if (smallest != i) {
+        swap(&heap->arr[i], &heap->arr[smallest]);
+        heapify(heap, smallest);
+    }
+}
+
+// Extract min
+struct ListNode* extractMin(struct MinHeap* heap) {
+    if (heap->size == 0) return NULL;
+
+    struct ListNode* root = heap->arr[0];
+    heap->arr[0] = heap->arr[heap->size - 1];
+    heap->size--;
+
+    heapify(heap, 0);
+    return root;
+}
+
+// Insert node
+void insertHeap(struct MinHeap* heap, struct ListNode* node) {
+    int i = heap->size++;
+    heap->arr[i] = node;
+
+    while (i > 0 && heap->arr[(i - 1)/2]->val > heap->arr[i]->val) {
+        swap(&heap->arr[i], &heap->arr[(i - 1)/2]);
+        i = (i - 1)/2;
+    }
+}
+
+struct ListNode* mergeKLists(struct ListNode** lists, int listsSize) {
+    if (listsSize == 0) return NULL;
+
+    struct MinHeap heap;
+    heap.arr = (struct ListNode**)malloc(sizeof(struct ListNode*) * listsSize);
+    heap.size = 0;
+
+    // Add first nodes
+    for (int i = 0; i < listsSize; i++) {
+        if (lists[i] != NULL) {
+            insertHeap(&heap, lists[i]);
+        }
+    }
+
+    struct ListNode dummy;
+    struct ListNode* tail = &dummy;
+    dummy.next = NULL;
+
+    while (heap.size > 0) {
+        struct ListNode* minNode = extractMin(&heap);
+
+        tail->next = minNode;
+        tail = tail->next;
+
+        if (minNode->next != NULL) {
+            insertHeap(&heap, minNode->next);
+        }
+    }
+
+    return dummy.next;
+}

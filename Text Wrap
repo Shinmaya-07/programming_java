@@ -1,0 +1,85 @@
+\* Hacker rank - Medium
+Prakhar has a string with words where the length of the word is . 
+The words are displayed in the window separated by a space. More precisely, when the sentence is displayed in a window of width , the following conditions are satisfied.
+    The first word is displayed at the beginning of the top line.
+    The word () is displayed either with a gap of  after the word, or at the beginning of the line below the line containing the word
+    The width of each line does not exceed . Here, the width of a line refers to the distance from the left end of the leftmost word to the right end of the rightmost word.
+    A word should not be broken into  or more lines 
+Prakhar Wants to fit these words in or less than lines, find the minimum possible width of the window.
+
+Input Format:
+The first line contains space seperated integers - the total number of words and - the required number of lines. 
+The next line contains space seperated integers  
+
+Output Format:
+Print the minimum possible width  of the window
+
+Examples
+Input
+6 4
+5 4 3 6 2 4
+
+Output
+8
+
+Explanation
+It can be proven that we cannot fit these words in 4 or less than 4 lines with width 7 or lesser.
+*/
+
+
+#include <stdio.h>
+
+// Check if we can fit in k lines with width W
+int canFit(int arr[], int n, int k, int W) {
+    int lines = 1;
+    int currentWidth = 0;
+
+    for (int i = 0; i < n; i++) {
+        if (arr[i] > W) return 0; // single word too big
+
+        if (currentWidth == 0) {
+            currentWidth = arr[i];
+        } else if (currentWidth + 1 + arr[i] <= W) {
+            currentWidth += 1 + arr[i]; // add space + word
+        } else {
+            lines++;
+            currentWidth = arr[i];
+        }
+    }
+
+    return lines <= k;
+}
+
+int main() {
+    int n, k;
+    scanf("%d %d", &n, &k);
+
+    int arr[n];
+    int maxWord = 0, sum = 0;
+
+    for (int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+        if (arr[i] > maxWord) maxWord = arr[i];
+        sum += arr[i];
+    }
+
+    int left = maxWord;
+    int right = sum + (n - 1); // include spaces
+    int answer = right;
+
+    // Binary Search
+    while (left <= right) {
+        int mid = (left + right) / 2;
+
+        if (canFit(arr, n, k, mid)) {
+            answer = mid;
+            right = mid - 1; // try smaller
+        } else {
+            left = mid + 1;  // need larger
+        }
+    }
+
+    printf("%d\n", answer);
+
+    return 0;
+}

@@ -26,35 +26,41 @@ Explanation
 Here we can re-arrange the string as abba , we need no extra characters to make this a palindrome
 */
 
-#include <stdio.h>
-#include <string.h>
+import java.util.*;
 
-int main(){
-    int t;
-    scanf("%d", &t);
-
-    while(t--){
-        int n;
-        scanf("%d", &n);
-        char str[100005];
-        scanf("%s", str);
-
-        int freq[26] = {0};
-
-        for(int i = 0; i < n; i++){
-            freq[str[i] - 'a']++;
-        }
-
-        int odd = 0;
-
-        for(int i = 0; i < 26; i++){
-            if(freq[i] % 2 != 0){
-                odd++;
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int T = sc.nextInt(); // number of test cases
+       
+        for (int t = 0; t < T; t++) {
+            int n = sc.nextInt(); // length of the string (not actually needed in implementation)
+            sc.nextLine(); // consume the newline character
+           
+            String s = sc.nextLine(); // the string
+           
+            int[] freq = new int[26]; // array to count frequency of each character
+           
+            // Count frequencies of each character
+            for (char c : s.toCharArray()) {
+                freq[c - 'a']++;
             }
+           
+            int odd_count = 0;
+           
+            // Count characters with odd frequencies
+            for (int count : freq) {
+                if (count % 2 != 0) {
+                    odd_count++;
+                }
+            }
+           
+            // Minimum cost to make the string a palindrome
+            int minCost = Math.max(0, odd_count - 1); // If odd_count is 0 or 1, cost is 0
+           
+            System.out.println(minCost);
         }
-
-        int result = odd / 2;
-        printf("%d\n", result);
+       
+        sc.close();
     }
-    return 0;
 }

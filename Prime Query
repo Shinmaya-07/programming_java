@@ -1,4 +1,4 @@
-\* Hacker Earth - Easy
+\* Hacker Earth - Medium
 You are given an array having integers and queries. Each query is described by two integers and . 
 For each query, find the number of pairs such that and can be expressed as the sum of one or more prime numbers.
 In the sum, you are allowed to use a prime number more than once.

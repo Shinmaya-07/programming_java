@@ -1,0 +1,55 @@
+\* code chef - hard
+Chef is trying to invent the light bulb that can run at room temperature without electricity. 
+So he has NN gases numbered from 00 to N−1N−1 that he can use and he doesn't know which one of the NN gases will work but we do know it.
+Now Chef has worked on multiple search algorithms to optimize search. For this project, he uses a modulo-based search algorithm that he invented himself.
+So first he chooses an integer KK and selects all indices ii in increasing order such that i mod K=0imodK=0 and test the gases on such indices, 
+then all indices ii in increasing order such that i mod K=1imodK=1, andtest the gases on such indices, and so on.
+Given NN, the index of the gas pp that will work, and KK, find after how much time will he be able to give Chefland a new invention assuming that testing 11 gas takes 11 day.
+
+For example, consider N=5,p=2N=5,p=2 and K=3K=3.
+    On the 1st1st day, Chef tests gas numbered 00 because 0 mod 3=00mod3=0.
+    On the 2nd2nd day, Chef tests gas numbered 33 because 3 mod 3=03mod3=0.
+    On the 3rd3rd day, Chef tests gas numbered 11 because 1 mod 3=11mod3=1.
+    On the 4th4th day, Chef tests gas numbered 44 because 4 mod 3=14mod3=1.
+    On the 5th5th day, Chef tests gas numbered 22 because 2 mod 3=22mod3=2.
+So after 55 days, Chef will be able to give Chefland a new invention
+*/
+
+
+import java.util.*;
+import java.io.*;
+
+class Codechef
+{
+	public static void main (String[] args) throws Exception
+	{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+		
+		int T = Integer.parseInt(br.readLine());
+		
+		while (T-- > 0) {
+		    String[] input = br.readLine().split(" ");
+		    long N = Long.parseLong(input[0]);
+		    long p = Long.parseLong(input[1]);
+		    long K = Long.parseLong(input[2]);
+		    
+		    long group = p % K;
+		    
+		    long daysBefore = 0;
+		    
+		    // count elements in previous groups
+		    for (long r = 0; r < group; r++) {
+		        daysBefore += ((N - 1 - r) / K) + 1;
+		    }
+		    
+		    long posInGroup = p / K;
+		    
+		    long ans = daysBefore + posInGroup + 1;
+		    
+		    sb.append(ans).append("\n");
+		}
+		
+		System.out.print(sb);
+	}
+}

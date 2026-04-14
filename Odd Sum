@@ -1,0 +1,33 @@
+\* code chef- Medium
+Given an integer NN, consider all arrays AA of size NN such that:
+
+    All the elements are non-negative and distinct.
+    All prefix sums are odd. Formally, for all ii such that 1≤i≤N1≤i≤N, ∑j=1iAj∑j=1i​Aj​ is odd.
+
+Among all possible arrays AA, output the smallest possible sum of the elements of the array.
+
+Note: Since the Input/Output may be large, it is preferred to use fast I/O.
+*/
+
+import java.util.*;
+import java.io.*;
+
+class Codechef
+{
+	public static void main (String[] args) throws Exception
+	{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+		
+		int T = Integer.parseInt(br.readLine());
+		
+		while (T-- > 0) {
+		    long N = Long.parseLong(br.readLine());
+		    
+		    long ans = 1 + (N - 1) * (N - 2);
+		    sb.append(ans).append("\n");
+		}
+		
+		System.out.print(sb);
+	}
+}

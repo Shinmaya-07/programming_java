@@ -1,0 +1,46 @@
+\* Code chef - difficulty : 1100
+Cycle in a linked list
+You are given a linked list AA of size NN.
+Return the node where the cycle begins in the linked list. If there is no cycle, return NULL.
+*/
+
+/* Node is defined as
+
+class Node
+{
+    int data;
+    Node next;
+    Node(int d) {data = d; next = null; }
+}
+
+*/
+
+
+class Solution {
+    public static Node detectCycle(Node head) {
+        if (head == null || head.next == null) return null;
+
+        Node slow = head;
+        Node fast = head;
+
+        // Phase 1: Detect cycle
+        while (fast != null && fast.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+
+            if (slow == fast) {
+                // Phase 2: Find start of cycle
+                slow = head;
+
+                while (slow != fast) {
+                    slow = slow.next;
+                    fast = fast.next;
+                }
+
+                return slow; // cycle start
+            }
+        }
+
+        return null; // no cycle
+    }
+}

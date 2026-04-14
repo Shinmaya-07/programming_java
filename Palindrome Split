@@ -1,0 +1,38 @@
+\* hacker earth - easy
+You are given a string consisting of lowercase English letters. 
+Your task is to find the maximum number of palindromic subsequences that can be created from the given string. 
+Each palindromic subsequence must have a length greater than 1, and each element of the string can be part of atmost one palindromic subsequence.
+We'll call non-empty string subsequence of string , where |S| is the length of string S. 
+For example, strings "abcb", "cb" and "abacaba" are subsequences of string "abacaba".
+*/
+
+
+import java.io.*;
+import java.util.*;
+
+class TestClass {
+    public static void main(String args[] ) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int T = Integer.parseInt(br.readLine());
+
+        while (T-- > 0) {
+            String s = br.readLine();
+
+            int[] freq = new int[26];
+
+            // Count frequency
+            for (char c : s.toCharArray()) {
+                freq[c - 'a']++;
+            }
+
+            int count = 0;
+
+            // Count pairs
+            for (int i = 0; i < 26; i++) {
+                count += freq[i] / 2;
+            }
+
+            System.out.println(count);
+        }
+    }
+}

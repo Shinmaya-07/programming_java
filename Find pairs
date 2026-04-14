@@ -1,0 +1,19 @@
+\* hacker earth - easy
+Given an array of length . Find the number of ordered pairs which satisfy the given condition
+*/
+import java.io.*;
+import java.util.*;
+
+class TestClass {
+    public static void main(String args[] ) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        int N = Integer.parseInt(br.readLine());
+        String[] arr = br.readLine().split(" ");
+        
+        // We don't actually need array values for this logic
+        long result = (long) N * (N - 1);
+        
+        System.out.println(result);
+    }
+}

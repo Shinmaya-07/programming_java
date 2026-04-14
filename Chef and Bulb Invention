@@ -14,8 +14,6 @@ For example, consider N=5,p=2N=5,p=2 and K=3K=3.
     On the 5th5th day, Chef tests gas numbered 22 because 2 mod 3=22mod3=2.
 So after 55 days, Chef will be able to give Chefland a new invention
 */
-
-
 import java.util.*;
 import java.io.*;
 
@@ -36,12 +34,7 @@ class Codechef
 		    
 		    long group = p % K;
 		    
-		    long daysBefore = 0;
-		    
-		    // count elements in previous groups
-		    for (long r = 0; r < group; r++) {
-		        daysBefore += ((N - 1 - r) / K) + 1;
-		    }
+		    long daysBefore = group * (N / K) + Math.min(group, N % K);
 		    
 		    long posInGroup = p / K;
 		    

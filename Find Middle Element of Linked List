@@ -1,0 +1,52 @@
+\* Code chef - difficulty : 1200
+Find Middle Element of Linked List
+You are given the head of a singly linked list AA of length NN. The values in the list are A1,A2,…,ANA1​,A2​,…,AN​ respectively. You need to find the value of the middle element of the linked list.
+The middle element of a linked list of length NN is the (⌊N2⌋+1)(⌊2N​⌋+1)-th element from the head of the list.
+Input Format
+    The first line of the input contains a single integer TT - the number of test cases. The description of TT test cases follows.
+    The first line of each test case contains a single integer NN.
+    The second line of each test case contains NN space-separated integers A1,A2,…,ANA1​,A2​,…,AN​.
+
+Output Format
+    For each test case, the function you complete should return the value of the middle element of the list.
+Note: You need to complete the function getMiddleElement to solve the problem.
+Sample 1:
+Input
+3
+5
+1 2 3 4 5
+6
+1 2 3 4 5 6
+4
+10 1 6 12
+Output
+3
+4
+6
+
+Explanation:
+Example case 1: The value of the middle element is A3=3A3​=3.
+Example case 2: The value of the middle element is A4=4A4​=4.
+Example case 3: The value of the middle element is A3=6A3​=6.
+*/
+
+
+/*class Node{
+    int val;
+    Node next;
+    Node(int x){
+    	val = x; next = null;
+    }
+}*/
+
+static int getMiddleElement(Node head) {
+    Node slow = head;
+    Node fast = head;
+
+    while (fast != null && fast.next != null) {
+        slow = slow.next;        // 1 step
+        fast = fast.next.next;   // 2 steps
+    }
+
+    return slow.val;
+}

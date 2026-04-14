@@ -1,0 +1,69 @@
+\* Hacker earth - easy
+You are given an array A of length N. 
+You take an array B of length N such that B[i] = 0 for each 1 <= i <= N. 
+You can apply the following operation on B any number of times:
+    Choose (N - 1) distinct indices and add 1 to each of those indices.
+Task
+Find the number of operations required to convert array B into array A by applying the given operation. Print -1 if it is impossible to do so.
+
+Function description
+Complete the function solve() provided in the editor. This function takes the following two parameters and returns the required answer:
+    N: Represents the length of array A.
+    A: Represents the array A.
+
+*/
+
+import java.io.*;
+import java.util.*;
+
+public class TestClass {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int T = Integer.parseInt(br.readLine().trim());
+
+        while (T-- > 0) {
+            int N = Integer.parseInt(br.readLine().trim());
+            String[] arr_A = br.readLine().split(" ");
+            int[] A = new int[N];
+
+            for (int i = 0; i < N; i++) {
+                A[i] = Integer.parseInt(arr_A[i]);
+            }
+
+            int out_ = solve(N, A);
+            System.out.println(out_);
+        }
+
+        br.close();
+    }
+
+    static int solve(int N, int[] A) {
+        long sum = 0;
+
+        // Calculate sum
+        for (int val : A) {
+            sum += val;
+        }
+
+        // Special case: N = 1
+        if (N == 1) {
+            return (A[0] == 0) ? 0 : -1;
+        }
+
+        // Check divisibility
+        if (sum % (N - 1) != 0) {
+            return -1;
+        }
+
+        long x = sum / (N - 1);
+
+        // Validate elements
+        for (int val : A) {
+            if (val > x) {
+                return -1;
+            }
+        }
+
+        return (int) x;
+    }
+}

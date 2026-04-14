@@ -1,0 +1,48 @@
+/* Code chef -  Difficulty : 900
+You are given head of the non-empty sorted linked list where the value of the ithith node will be AiAi​.
+Your task is to delete all duplicates such that each element appears only once and return the linked list sorted.
+Sample 1:
+Input
+3
+5
+1 1 6 8 8
+5
+1 2 3 4 5
+4
+5 5 5 5
+Output
+1 6 8 
+1 2 3 4 5 
+5 
+
+Explanation:
+Test case 11: We will remove duplicate entry of 11, 88. So the sorted linked list will be 1→6→81→6→8.
+Test case 22: There is no duplicate entry. So the sorted linked list will be 1→2→3→4→51→2→3→4→5.
+Test case 33: We will remove duplicate entry of 55. So the sorted linked list will be 55.
+*/
+
+
+struct Node {
+    int data;
+    struct Node next;
+    Node(int x) {
+        data = x;
+        next = null;
+    }
+}
+class Solution {
+    Node removeDuplicates(Node head) {
+        Node current = head;
+
+        while (current != null && current.next != null) {
+            if (current.data == current.next.data) {
+                // Remove duplicate
+                current.next = current.next.next;
+            } else {
+                current = current.next;
+            }
+        }
+
+        return head;
+    }
+};
